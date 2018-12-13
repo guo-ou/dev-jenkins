@@ -1,15 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'node:7-alpine' }
+    }
     stages {
-        stage('Deploy') {
+        stage('Test') {
             steps {
-                retry(3) {
-                    bat './flakey-deploy.sh'
-                }
-
-                timeout(time: 3, unit: 'MINUTES') {
-                    bat './health-check.sh'
-                }
+                bat 'node --version'
             }
         }
     }
